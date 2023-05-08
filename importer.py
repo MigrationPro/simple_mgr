@@ -37,8 +37,6 @@ class ShopifyImporter:
         for product_raw in products_raw:
             product = ProductParser(product_raw).parse()
             products.append(product)
-            logger.debug(f"Product: {product}")
-            break
 
         return products
 
