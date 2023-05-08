@@ -6,10 +6,11 @@ from typing import Dict, List, Optional
 
 from constants import OutOfStock, SpecificPriceType
 
-
 """
 The data classes can be changed and adapted to the needs of the developer and task
 """
+
+
 class WeightUnit(Enum):
     KG = 1
     GR = 2
@@ -119,6 +120,8 @@ class Variant:
     specific_prices: List[SpecificPrice]
     images: List[Image]
     attribute_pairs: List[AttributePair]
+    is_taxable: Optional[bool]
+    is_virtual: Optional[bool]
     barcode: Barcode = Barcode(ean_13=None, upc=None)
     weight: Weight = Weight(value=None)
 
@@ -152,4 +155,3 @@ class Product:
     updated_date: Optional[datetime]
     weight: Weight = Weight(value=None)
     barcode: Barcode = Barcode(ean_13=None, upc=None)
-
