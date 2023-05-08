@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from decimal import Decimal
 from enum import Enum
+
 from typing import Dict, List, Optional
 
 from constants import OutOfStock, SpecificPriceType
@@ -39,6 +40,7 @@ class Stock:
 class AttributeGroup:
     id: Optional[str]
     name: str
+    position: int
     lang_id: Optional[str]
     attributes: Dict[str, Attribute]
 

@@ -2,7 +2,7 @@ from cart import Cart
 from exporter import get_exporter
 from importer import get_importer
 from utils import find_logger
-
+import sys
 
 logger = find_logger(__name__)
 
@@ -25,6 +25,12 @@ if __name__ == "__main__":
 
     target_url = None
     target_token = None
+    
+    for i in range(len(sys.argv)):
+        if sys.argv[i] == '--source_url' and i < len(sys.argv) - 1:
+            source_url = sys.argv[i + 1]
+        elif sys.argv[i] == '--source_token' and i < len(sys.argv) - 1:
+            source_token = sys.argv[i + 1]
 
     source_cart = Cart(source_url, source_token)
     target_cart = Cart(target_url, target_token)
