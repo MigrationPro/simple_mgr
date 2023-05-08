@@ -13,7 +13,7 @@ from schemas.product import (
     Weight,
     Variant,
     Stock,
-    SpecificPrice,
+    SpecificPrice, Barcode,
 )
 from utils import find_logger
 
@@ -226,7 +226,7 @@ class ProductParser:
         variant = Variant(
             id=variant_raw["id"],
             sku=variant_raw["sku"],
-            barcode=variant_raw["barcode"],
+            barcode=Barcode(ean_13=variant_raw["barcode"], upc=None),
             price=price,
             weight=weight,
             images=images,
