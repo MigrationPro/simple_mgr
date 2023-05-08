@@ -1,6 +1,7 @@
 from typing import List
+
 from cart import Cart
-from product import Product
+from schemas.product import Product
 
 """
 connector query
@@ -18,6 +19,7 @@ POST http://source.com/mp_connector/connector.php?token=0D0D3A92286CBC3D6A87C15F
 }
 """
 
+
 class PrestashopExporter:
     def __init__(self, source_data: List[Product], cart: Cart) -> None:
         self.source_data = source_data
@@ -25,12 +27,11 @@ class PrestashopExporter:
 
     def start(self) -> int:
         migrated_entities_count = 0
-        
+
         # implement the exporter logic here
-        
+
         return migrated_entities_count
-    
+
 
 def get_exporter(source_data: list, cart: Cart):
     return PrestashopExporter(source_data=source_data, cart=cart)
-
