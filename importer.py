@@ -29,36 +29,37 @@ class ShopifyImporter:
         products: List[Product] = []
         response = self.get_products()
         collects = self.get_collects()
-        for p in response["products"]:
-            product = Product(
-                id=p["id"],
-                name=p["title"],
-                description=p["body_html"],
-                short_description=p["body_html"],
-                meta_title=p["title"],
-                meta_description=p["body_html"],
+        for product in response["products"]:
+            instance = Product(
+                id=product["id"],
+                name=product["title"],
+                description=product["body_html"],
+                short_description=product["body_html"],
+                meta_title=product["title"],
+                meta_description=product["body_html"],
                 shop_id=None,
                 lang_id=None,
-                link_rewrite=p["handle"],
-                price=p["variants"][0]["price"],
-                cost=p["variants"][0]["price"],
-                is_active=True if p["status"] == "active" else False,
-                is_virtual=True if p["published_scope"] == "global" else False,
-                is_taxable=p["variants"][0]["taxable"],
-                sku=p["variants"][0]["sku"],
-                created_date=p["created_at"],
-                updated_date=p["updated_at"],
-                images=self.get_images(p),
-                variants=self.get_variants(p),
-                manufacturers=self.get_manufacturers(p),
-                categories=self.get_categories(p, collects),
-                specific_prices=self.get_specific_prices(p),
-                tags=p["tags"].split(","),
-                stock=self.get_stock(p),
-                weight=self.get_weight(p["variants"][0]),
-                barcode=Barcode(ean_13=p["variants"][0]["barcode"], upc=None),
+                link_rewrite=product["handle"],
+                price=product["variants"][0]["price"],
+                cost=product["variants"][0]["price"],
+                is_active=True if product["status"] == "active" else False,
+                is_virtual=True if product["published_scope"] == "global" else False,
+                is_taxable=product["variants"][0]["taxable"],
+                sku=product["variants"][0]["sku"],
+                created_date=product["created_at"],
+                updated_date=product["updated_at"],
+                images=self.get_images(product),
+                variants=self.get_variants(product),
+                manufacturers=self.get_manufacturers(product),
+                categories=self.get_categories(product, collects),
+                specific_prices=self.get_specific_prices(product),
+                tags=product["tags"].split(","),
+                stock=self.get_stock(product),
+                weight=self.get_weight(product["variants"][0]),
+                barcode=Barcode(
+                    ean_13=product["variants"][0]["barcode"], upc=None),
             )
-            products.append(product)
+            products.append(instance)
 
         return products
 
