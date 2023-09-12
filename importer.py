@@ -16,7 +16,8 @@ from product import (
     AttributePair,
     AttributeGroup,
     Attribute,
-    CategoryInfo
+    CategoryInfo,
+    WeightUnit
 )
 
 
@@ -54,9 +55,7 @@ class ShopifyImporter:
                 specific_prices=self.get_specific_prices(p),
                 tags=p["tags"].split(","),
                 stock=self.get_stock(p),
-                weight=Weight(
-                    value=p["variants"][0]["weight"]
-                ),
+                weight=self.get_weight(p["variants"][0]),
                 barcode=Barcode(ean_13=p["variants"][0]["barcode"], upc=None),
             )
             products.append(product)
@@ -122,7 +121,7 @@ class ShopifyImporter:
                 images=self.get_images(product, variant=variant),
                 attribute_pairs=self.get_attribute_pairs(product),
                 barcode=Barcode(ean_13=variant["barcode"], upc=None),
-                weight=Weight(value=variant["weight"]),
+                weight=self.get_weight(variant),
             ) for variant in product["variants"]
         ]
         return variants
@@ -210,6 +209,12 @@ class ShopifyImporter:
             ),
         ]
         return stocks
+
+    def get_weight(self, variant):
+        weight: List[Weight] = Weight(
+            value=variant["weight"], weight_unit=WeightUnit.KG if variant["weight_unit"] == "kg" else WeightUnit.GR
+        )
+        return weight
 
 
 def get_importer(cart):
