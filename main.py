@@ -1,3 +1,5 @@
+import sys
+
 from cart import Cart
 from exporter import get_exporter
 from importer import get_importer
@@ -20,8 +22,9 @@ def process(source: Cart, target: Cart):
 if __name__ == "__main__":
     # extract the values FOR these variables from the command line options (flags)
     # python main.py --source_url http://source.com --source_token SOURCE --target_url http://target.com --target_token TARGET
-    source_url = None
-    source_token = None
+    parameters = sys.argv
+    source_url = parameters[2] or None
+    source_token = parameters[4] or None
 
     target_url = None
     target_token = None

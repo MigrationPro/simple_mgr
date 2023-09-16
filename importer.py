@@ -1,7 +1,10 @@
+import requests
+
 from typing import List
 
 from cart import Cart
 from product import Product
+from utils import get_request, parse_product
 
 
 class ShopifyImporter:
@@ -11,10 +14,11 @@ class ShopifyImporter:
     def start(self) -> List[Product]:
         products: List[Product] = []
 
-        # implement the importer logic here
+        raw_product_list = get_request(self.cart).get("products", None)
+
+        products = [parse_product(product) for product in raw_product_list]
 
         return products
-
 
 def get_importer(cart):
     return ShopifyImporter(cart)
